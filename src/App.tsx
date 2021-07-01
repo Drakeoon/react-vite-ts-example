@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Button, Box, Grid, Text, Badge } from "@chakra-ui/react";
 import { createListing } from "store/actions";
 import { Listing } from "store/reducers/listings";
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -10,11 +11,11 @@ interface ListingCardProps {
 
 const ListingCard = ({ listing }: ListingCardProps) => {
   return (
-    <div>
+    <Box p={4} bg="gray.100" borderRadius={4}>
       <div>{listing.id}</div>
 
       <a href={listing.url}>Click me</a>
-    </div>
+    </Box>
   );
 };
 
@@ -35,15 +36,36 @@ function App() {
   const handleCreateClick = () => dispatch(createListing(listing));
 
   return (
-    <div className="App">
-      <h1>Hello!</h1>
+    <Box p={24}>
+      <Box display="flex">
+        <Text as="h1" fontSize="3xl">
+          Hello in an example Vite app built with:
+        </Text>
 
-      {listings.map((listing) => (
-        <ListingCard key={listing.id} listing={listing} />
-      ))}
+        <Button ml="auto" mt={4} colorScheme="teal" onClick={handleCreateClick}>
+          Create listing
+        </Button>
+      </Box>
 
-      <button onClick={handleCreateClick}>Create listing</button>
-    </div>
+      <Box>
+        <Badge bg="blue.100">React</Badge>
+        <Badge bg="blue.100" ml={2}>
+          Redux
+        </Badge>
+        <Badge bg="blue.100" ml={2}>
+          Typescript
+        </Badge>
+        <Badge bg="blue.100" ml={2}>
+          Vite
+        </Badge>
+      </Box>
+
+      <Grid templateColumns="repeat(3, 1fr)" mt={4} gap={6}>
+        {listings.map((listing) => (
+          <ListingCard key={listing.id} listing={listing} />
+        ))}
+      </Grid>
+    </Box>
   );
 }
 
