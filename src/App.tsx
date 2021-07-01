@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import "./App.css";
+import React from "react";
+
 import { createListing } from "store/actions";
 import { Listing } from "store/reducers/listings";
 import { useAppDispatch, useAppSelector } from "hooks";
@@ -19,8 +19,10 @@ const ListingCard = ({ listing }: ListingCardProps) => {
 };
 
 function App() {
+  const randomId = Math.random() * 100000;
+
   const listing = {
-    id: "123123",
+    id: `${randomId}`,
     url: "https://google.com",
   };
 
@@ -30,16 +32,17 @@ function App() {
 
   const dispatch = useAppDispatch();
 
+  const handleCreateClick = () => dispatch(createListing(listing));
+
   return (
     <div className="App">
       <h1>Hello!</h1>
 
       {listings.map((listing) => (
-        <ListingCard listing={listing} />
+        <ListingCard key={listing.id} listing={listing} />
       ))}
-      <button onClick={() => dispatch(createListing(listing))}>
-        create listing
-      </button>
+
+      <button onClick={handleCreateClick}>Create listing</button>
     </div>
   );
 }
